@@ -1,6 +1,6 @@
 package service.operation;
 
-import java.util.List;
+import java.util.Map;
 import model.OrderTransaction;
 import model.Transaction;
 import storage.Storage;
@@ -18,16 +18,39 @@ public class OrderOperationHandler implements OperationHandler {
 
         switch (orderTransaction.getType()) {
             case BUY:
-                Storage.reportMap.put(ASK,
-                        List.of(Storage.reportMap.get(ASK).get(PRICE_POSITION),
-                                Storage.reportMap.get(ASK)
-                                        .get(SIZE_POSITION) - orderTransaction.getSize()));
+                buyHandle(orderTransaction.getSize());
                 return;
             default:
-                Storage.reportMap.put(BID,
-                        List.of(Storage.reportMap.get(BID).get(PRICE_POSITION),
-                                Storage.reportMap.get(BID)
-                                        .get(SIZE_POSITION) - orderTransaction.getSize()));
+                sellHandle(orderTransaction.getSize());
         }
+    }
+
+    private void buyHandle(int size) {
+        int minValueAsk = Storage.reportMapAsk.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .mapToInt(v -> v).min()
+                .orElseThrow();
+        Storage.reportMapAsk.put(Storage.reportMapAsk.entrySet()
+                .stream()
+                .filter(e -> e.getValue() == minValueAsk)
+                .findFirst()
+                .orElseThrow()
+                .getKey(), minValueAsk - size);
+    }
+
+    private void sellHandle(int size) {
+        int maxValueBid = Storage.reportMapBid.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .mapToInt(v -> v)
+                .max()
+                .orElseThrow();
+        Storage.reportMapBid.put(Storage.reportMapBid.entrySet()
+                .stream()
+                .filter(e -> e.getValue() == maxValueBid)
+                .findFirst()
+                .orElseThrow()
+                .getKey(), maxValueBid - size);
     }
 }

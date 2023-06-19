@@ -1,15 +1,19 @@
 package service.operation;
 
-import java.util.List;
 import model.Transaction;
 import model.UpdateTransaction;
 import storage.Storage;
 
 public class UpdateOperationHandler implements OperationHandler {
+    private static final String BID = "bid";
+
     @Override
     public void handle(Transaction transaction) {
         UpdateTransaction updateTransaction = (UpdateTransaction) transaction;
-        Storage.reportMap.put(updateTransaction.getType(),
-                List.of(updateTransaction.getPrice(), updateTransaction.getSize()));
+        if (updateTransaction.getType().equals(BID)) {
+            Storage.reportMapBid.put(updateTransaction.getPrice(), updateTransaction.getSize());
+        } else {
+            Storage.reportMapAsk.put(updateTransaction.getPrice(), updateTransaction.getSize());
+        }
     }
 }

@@ -20,8 +20,8 @@ import service.operation.QueryOperationHandler;
 import service.operation.UpdateOperationHandler;
 
 public class Main {
-    private static final String fromFileName = "src/main/resources/input.txt";
-    private static final String toFileName = "src/main/resources/output.txt";
+    private static final String fromFileName = "input.txt";
+    private static final String toFileName = "output.txt";
     private static final File toFile = new File(toFileName);
     private static final TxtFileReader txtFileReader = new TxtFileReaderImpl();
     private static final ReportService reportService = new ReportServiceImpl();
