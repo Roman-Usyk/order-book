@@ -1,9 +1,7 @@
 package service.operation;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import model.QueryTransaction;
 import model.Transaction;
 import storage.Storage;
@@ -33,9 +31,13 @@ public class QueryOperationHandler implements OperationHandler {
                 return;
             default:
                 Optional<Integer> sizeFromBids = Storage.reportMapBid.entrySet()
-                        .stream().filter(e -> e.getKey() == queryTransaction.getPrice()).findFirst().map(Map.Entry::getValue);
+                        .stream().filter(e -> e.getKey() == queryTransaction.getPrice())
+                        .findFirst()
+                        .map(Map.Entry::getValue);
                 Optional<Integer> sizeFromAsks = Storage.reportMapAsk.entrySet()
-                        .stream().filter(e -> e.getKey() == queryTransaction.getPrice()).findFirst().map(Map.Entry::getValue);
+                        .stream().filter(e -> e.getKey() == queryTransaction.getPrice())
+                        .findFirst()
+                        .map(Map.Entry::getValue);
                 if (sizeFromBids.isPresent()) {
                     query.append(sizeFromBids.get());
                 } else if (sizeFromAsks.isPresent()) {
