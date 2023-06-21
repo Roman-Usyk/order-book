@@ -25,7 +25,7 @@ public class OrderOperationHandler implements OperationHandler {
         Integer valueOfMinAsk = Storage.reportMapAsk.get(keyOfMinAsk);
         if (valueOfMinAsk < size) {
             throw new RuntimeException("You can't buy " + size
-                    + " shares, there aren't that many shares");
+                    + " shares. There are " + valueOfMinAsk + " shares!");
         }
         Storage.reportMapAsk.put(keyOfMinAsk, valueOfMinAsk - size);
     }
@@ -35,7 +35,7 @@ public class OrderOperationHandler implements OperationHandler {
         Integer valueOfMaxBid = Storage.reportMapBid.get(keyOfMaxBid);
         if (valueOfMaxBid < size) {
             throw new RuntimeException("You can't buy " + size
-                    + " shares, there aren't that many shares");
+                    + " shares. There are " + valueOfMaxBid + " shares!");
         }
         Storage.reportMapBid.put(keyOfMaxBid, valueOfMaxBid - size);
     }
