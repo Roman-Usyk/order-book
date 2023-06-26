@@ -23,6 +23,17 @@
     <dependencies>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>D:\projects\order-book</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>D:\projects\order-book\input.txt</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
